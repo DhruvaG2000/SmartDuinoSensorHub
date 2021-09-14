@@ -1,0 +1,3 @@
+[submodule "hardware/Nano_33"]
+	path = hardware/Nano_33
+	url = git@github.com:hulkco/Nano_33.git

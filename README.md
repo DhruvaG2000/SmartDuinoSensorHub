@@ -45,3 +45,4 @@ LED ON: This LED is connected to the 5V input from either USB or VIN.
 1. [simple audio player](https://www.arduino.cc/en/Tutorial/SimpleAudioPlayer)
 2. [DS-15580-Arduino_Nano_33_BLE_Sense.pdf](https://cdn.sparkfun.com/assets/0/d/8/4/9/DS-15580-Arduino_Nano_33_BLE_Sense.pdf)
 3. [arduino-nano-33-ble](https://store.arduino.cc/products/arduino-nano-33-ble)
+4. [Datasheet](https://docs.arduino.cc/static/302aa1d360c877c9bbab39f14e2f3ea6/ABX00031-datasheet.pdf)

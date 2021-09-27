@@ -1,5 +1,13 @@
 # SmartDuino
 
+## Preview
+
+![](media/Preview-1.jpg)
+
+![](media/Preview-2.jpg)
+
+![](media/IMG-20210927-WA0009.jpeg)
+
 ## Introduction
 
 This is an Open Source Project that aims to provide a Smart Speaker with an extremely intuitive user interface using gestures and OLED Display.

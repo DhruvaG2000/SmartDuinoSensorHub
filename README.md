@@ -2,8 +2,6 @@
 
 ## Preview
 
-![](media/Preview-1.jpg)
-
 ![](media/Preview-2.jpg)
 
 ![](media/IMG-20210927-WA0009.jpeg)

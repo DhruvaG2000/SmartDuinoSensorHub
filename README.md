@@ -1,16 +1,21 @@
 # SmartDuino
 
-## Preview
+## Introduction
 
-![](media/Preview-1.jpg)
+This is an Open Source Project that aims to provide a Smart Speaker with an extremely intuitive user interface using gestures and OLED Display.
+It flaunts amazing features like:
+- OLED Module for high contrast and low power consumption Display Interface.
+- Air Gestures to control music playback and volume (No more BUTTONS!)
+- Air Humidity and Temperature Sensing.
+- Timer with alarm.
+- Fun Games using motion detection.
+- BLE for low power wireless connectivity with your smartphone.
+
+## Preview
 
 ![](media/Preview-2.jpg)
 
 ![](media/IMG-20210927-WA0009.jpeg)
-
-## Introduction
-
-This is an Open Source Project that aims to provide a Smart Speaker with an extremely intuitive user interface using gestures and OLED Display.
 
 ### About: Arduino Nano 33 BLE Sense
 ![](https://www.etechnophiles.com/wp-content/uploads/2021/01/component.jpg?ezimgfmt=ng:webp/ngcb40)

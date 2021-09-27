@@ -1,8 +1,8 @@
 // Define ONLY one of these:
-#define DHT 1
+#define DHT 0
 #define MOTION 0
 #define SERIAL_ECHO 0
-#define IMU_MOTION_ACCEL 0
+#define IMU_MOTION_ACCEL 1
 #define IMU_MOTION_GYRO 0
 
 #if MOTION == 1
@@ -366,16 +366,21 @@ void setup() {
 }
 
 void loop() {
-  float x, y, z;
+  float x, y, z, delta = 0.05;
 
-  if (IMU.accelerationAvailable()) {
+  if (IMU.accelerationAvailable())
+  {
     IMU.readAcceleration(x, y, z);
-
-    Serial.print(x);
-    Serial.print('\t');
-    Serial.print(y);
-    Serial.print('\t');
-    Serial.println(z);
+    if (y <= delta && y >= -delta)
+      Serial.println("flat");
+    else if (y > delta && y < 1 - delta)
+      Serial.println("tilted to the left");
+    else if (y >= 1 - delta)
+      Serial.println("left");
+    else if (y < -delta && y > delta - 1)
+      Serial.println("tilted to the right");
+    else
+      Serial.println("right");
   }
 }
 

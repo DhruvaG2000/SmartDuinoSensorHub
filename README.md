@@ -1,7 +1,10 @@
-# ble-speaker-sd-card
+# SmartDuino
 
 ## Introduction
 
+This is an Open Source Project that aims to provide a Smart Speaker with an extremely intuitive user interface using gestures and OLED Display.
+
+### About: Arduino Nano 33 BLE Sense
 ![](https://www.etechnophiles.com/wp-content/uploads/2021/01/component.jpg?ezimgfmt=ng:webp/ngcb40)
 
 The pin diagram is
@@ -29,16 +32,18 @@ LED ON: This LED is connected to the 5V input from either USB or VIN.
 
 ## Project Milestones
 
-- [ ] Study the raw microphone data on-board the BLE nano sense
-- [ ] Obtain raw data from the proximity sensor or IMU for motion control
+- [X] Provide Air gestures for Music Volume and Playback control
+- [ ] IMU for mode toggle or playing games
 - [ ] Interface SD card with MCU
 - [ ] Interface audio amplifier with DAC of MCU
+- [ ] Play music from SD Card
 
 ## PCB Design
 
 ## Precautions
 
-1.
+1. Use a good quality USB type B micro Cable to power the Arduino NANO BLE. Otherwise you may face glitchy OLED text or arduino hangs.
+2. Double check the I2C, GPIO and other pins before soldering.
 
 ## References:
 
@@ -46,3 +51,4 @@ LED ON: This LED is connected to the 5V input from either USB or VIN.
 2. [DS-15580-Arduino_Nano_33_BLE_Sense.pdf](https://cdn.sparkfun.com/assets/0/d/8/4/9/DS-15580-Arduino_Nano_33_BLE_Sense.pdf)
 3. [arduino-nano-33-ble](https://store.arduino.cc/products/arduino-nano-33-ble)
 4. [Datasheet](https://docs.arduino.cc/static/302aa1d360c877c9bbab39f14e2f3ea6/ABX00031-datasheet.pdf)
+5. [Useful libraries for accessing on-board sensors](https://www.arduino.cc/en/Guide/NANO33BLESense)

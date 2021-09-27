@@ -1,8 +1,8 @@
 // Define ONLY one of these:
-#define DHT 0
+#define DHT 1
 #define MOTION 0
 #define SERIAL_ECHO 0
-#define IMU_MOTION_ACCEL 1
+#define IMU_MOTION_ACCEL 0
 #define IMU_MOTION_GYRO 0
 
 #if MOTION == 1
@@ -197,7 +197,8 @@ void setup() {
 
 void loop() {
   // read all the sensor values
-  float temperature = HTS.readTemperature();
+  float tempOffset = 6.00;
+  float temperature = HTS.readTemperature() - tempOffset;
   float humidity    = HTS.readHumidity();
   u8g2.firstPage();
 

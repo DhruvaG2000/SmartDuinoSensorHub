@@ -206,9 +206,9 @@ void setup()
 void loop()
 {
   // read all the sensor values
-  float tempOffset = 6.00;
-  float temperature = HTS.readTemperature() - tempOffset;
-  float humidity = HTS.readHumidity();
+  const float tempOffset = -4.50, humiOffset = 6.00;
+  static float temperature = HTS.readTemperature() + tempOffset;
+  static float humidity = HTS.readHumidity() + humiOffset;
   u8g2.firstPage();
 
   // print each of the sensor values
@@ -253,7 +253,7 @@ void loop()
   Serial.println();
 
   // wait 1 second to print again
-  delay(1000);
+  delay(1500);
 }
 
 #endif

@@ -30,7 +30,6 @@
 #include <Wire.h>
 #endif
 
-
 /*
   U8g2lib Example Overview:
     Frame Buffer Examples: clearBuffer/sendBuffer. Fast, but may not work with all Arduino boards because of RAM consumption
@@ -39,16 +38,17 @@
 
   This is a page buffer example.
 */
-U8G2_SH1106_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
+U8G2_SH1106_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/U8X8_PIN_NONE);
 
-
-void setup() {
+void setup()
+{
   u8g2.begin();
   Serial.begin(9600);
 
   // while (!Serial);
 
-  if (!APDS.begin()) {
+  if (!APDS.begin())
+  {
     Serial.println("Error initializing APDS9960 sensor!");
   }
 
@@ -61,88 +61,95 @@ void setup() {
 
   Serial.println("Detecting gestures ...");
 
-
-  do {
+  do
+  {
     u8g2.setFont(u8g2_font_ncenB14_tr);
     u8g2.drawStr(0, 24, "Detecting ");
     u8g2.drawStr(0, 48, "gestures ...");
-  } while ( u8g2.nextPage() );
-
+  } while (u8g2.nextPage());
 }
 
 int volume = 5, max_volume = 10;
-int song_num = 1; char song_char[100], volume_char[100];
+int song_num = 1;
+char song_char[100], volume_char[100];
 int max_song = 5;
 
-void loop() {
+void loop()
+{
 
   u8g2.firstPage();
-  if (APDS.gestureAvailable()) {
+  if (APDS.gestureAvailable())
+  {
     // a gesture was detected, read and print to serial monitor
     int gesture = APDS.readGesture();
 
-    switch (gesture) {
-      case GESTURE_UP:
-        Serial.println("Detected UP gesture");
-        if (song_num < max_song)
-          song_num++;
-        else
-          song_num = 1;
-        itoa(song_num, song_char, 10);
-        do {
-          u8g2.setFont(u8g2_font_ncenB14_tr);
-          u8g2.drawStr(0, 24, "Playing Next");
-          u8g2.drawStr(0, 48, "Song:");
-          u8g2.drawStr(60, 48, song_char);
-        } while ( u8g2.nextPage() );
-        break;
+    switch (gesture)
+    {
+    case GESTURE_UP:
+      Serial.println("Detected UP gesture");
+      if (song_num < max_song)
+        song_num++;
+      else
+        song_num = 1;
+      itoa(song_num, song_char, 10);
+      do
+      {
+        u8g2.setFont(u8g2_font_ncenB14_tr);
+        u8g2.drawStr(0, 24, "Playing Next");
+        u8g2.drawStr(0, 48, "Song:");
+        u8g2.drawStr(60, 48, song_char);
+      } while (u8g2.nextPage());
+      break;
 
-      case GESTURE_DOWN:
+    case GESTURE_DOWN:
 
-        Serial.println("Detected DOWN gesture");
-        if (song_num > 0)
-          song_num--;
-        else
-          song_num = max_song;
-        itoa(song_num, song_char, 10);
-        do {
-          u8g2.setFont(u8g2_font_ncenB14_tr);
-          u8g2.drawStr(0, 24, "Playing Prev.");
-          u8g2.drawStr(0, 48, "Song:");
-          u8g2.drawStr(60, 48, song_char);
-        } while ( u8g2.nextPage() );
-        break;
+      Serial.println("Detected DOWN gesture");
+      if (song_num > 0)
+        song_num--;
+      else
+        song_num = max_song;
+      itoa(song_num, song_char, 10);
+      do
+      {
+        u8g2.setFont(u8g2_font_ncenB14_tr);
+        u8g2.drawStr(0, 24, "Playing Prev.");
+        u8g2.drawStr(0, 48, "Song:");
+        u8g2.drawStr(60, 48, song_char);
+      } while (u8g2.nextPage());
+      break;
 
-      case GESTURE_LEFT:
-        Serial.println("Detected LEFT gesture");
-        if (volume < max_volume)
-          volume++;
-        itoa(volume, volume_char, 10);
-        do {
-          u8g2.setFont(u8g2_font_ncenB14_tr);
-          u8g2.drawStr(0, 24, "Volume");
-          u8g2.drawStr(0, 48, "Up:");
-          u8g2.drawStr(55, 48, volume_char);
-        } while ( u8g2.nextPage() );
-        break;
+    case GESTURE_LEFT:
+      Serial.println("Detected LEFT gesture");
+      if (volume < max_volume)
+        volume++;
+      itoa(volume, volume_char, 10);
+      do
+      {
+        u8g2.setFont(u8g2_font_ncenB14_tr);
+        u8g2.drawStr(0, 24, "Volume");
+        u8g2.drawStr(0, 48, "Up:");
+        u8g2.drawStr(55, 48, volume_char);
+      } while (u8g2.nextPage());
+      break;
 
-      case GESTURE_RIGHT:
-        Serial.println("Detected RIGHT gesture");
-        if (volume > 0)
-          volume--;
-        itoa(volume, volume_char, 10);
-        do {
-          u8g2.setFont(u8g2_font_ncenB14_tr);
-          u8g2.drawStr(0, 24, "Volume");
-          u8g2.drawStr(0, 48, "Down:");
-          u8g2.drawStr(65, 48, volume_char);
-        } while ( u8g2.nextPage() );
-        break;
+    case GESTURE_RIGHT:
+      Serial.println("Detected RIGHT gesture");
+      if (volume > 0)
+        volume--;
+      itoa(volume, volume_char, 10);
+      do
+      {
+        u8g2.setFont(u8g2_font_ncenB14_tr);
+        u8g2.drawStr(0, 24, "Volume");
+        u8g2.drawStr(0, 48, "Down:");
+        u8g2.drawStr(65, 48, volume_char);
+      } while (u8g2.nextPage());
+      break;
 
-      default:
-        Serial.println("Detected NO gesture");
-        // ignore
-        break;
+    default:
+      Serial.println("Detected NO gesture");
+      // ignore
+      break;
     }
   }
 }
@@ -174,7 +181,6 @@ void loop() {
 #include <Wire.h>
 #endif
 
-
 /*
   U8g2lib Example Overview:
     Frame Buffer Examples: clearBuffer/sendBuffer. Fast, but may not work with all Arduino boards because of RAM consumption
@@ -183,23 +189,26 @@ void loop() {
 
   This is a page buffer example.
 */
-U8G2_SH1106_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
+U8G2_SH1106_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/U8X8_PIN_NONE);
 
-
-void setup() {
+void setup()
+{
   u8g2.begin();
   Serial.begin(9600);
-  if (!HTS.begin()) {
+  if (!HTS.begin())
+  {
     Serial.println("Failed to initialize humidity temperature sensor!");
-    while (1);
+    while (1)
+      ;
   }
 }
 
-void loop() {
+void loop()
+{
   // read all the sensor values
   float tempOffset = 6.00;
   float temperature = HTS.readTemperature() - tempOffset;
-  float humidity    = HTS.readHumidity();
+  float humidity = HTS.readHumidity();
   u8g2.firstPage();
 
   // print each of the sensor values
@@ -208,17 +217,18 @@ void loop() {
   Serial.println(" °C");
   char result_int, result_float[8]; // Buffer big enough for 7-character float
   //dtostrf(temperature, 6, 2, result); // Leave room for too large numbers!
-  result_int = (int) temperature;
+  result_int = (int)temperature;
   float val_float = (abs(temperature) - abs(result_int)) * 100;
   int val_fra = (int)val_float;
-  sprintf (result_float, "%d.%d", result_int, val_fra); //
+  sprintf(result_float, "%d.%d", result_int, val_fra); //
 
-  do {
+  do
+  {
     u8g2.setFont(u8g2_font_ncenB14_tr);
     u8g2.drawStr(0, 24, "Temperature in");
     u8g2.drawStr(0, 48, "deg C:");
     u8g2.drawStr(65, 48, result_float);
-  } while ( u8g2.nextPage() );
+  } while (u8g2.nextPage());
   delay(1500);
 
   Serial.print("Humidity    = ");
@@ -226,18 +236,19 @@ void loop() {
   Serial.println(" %");
   // char result[8]; // Buffer big enough for 7-character float
   //dtostrf(humidity, 6, 2, result); // Leave room for too large numbers!
-  result_int = (int) humidity;
+  result_int = (int)humidity;
   val_float = (abs(humidity) - abs(result_int)) * 100;
   val_fra = (int)val_float;
-  sprintf (result_float, "%d.%d", result_int, val_fra); //
+  sprintf(result_float, "%d.%d", result_int, val_fra); //
 
   u8g2.firstPage();
-  do {
+  do
+  {
     u8g2.setFont(u8g2_font_ncenB14_tr);
     u8g2.drawStr(0, 24, "Humidity");
     u8g2.drawStr(0, 48, "% = ");
     u8g2.drawStr(55, 48, result_float);
-  } while ( u8g2.nextPage() );
+  } while (u8g2.nextPage());
   // print an empty line
   Serial.println();
 
@@ -246,7 +257,6 @@ void loop() {
 }
 
 #endif
-
 
 /*
 
@@ -296,8 +306,7 @@ void loop() {
 #include <Wire.h>
 #endif
 
-
-/*
+  /*
   U8g2lib Example Overview:
     Frame Buffer Examples: clearBuffer/sendBuffer. Fast, but may not work with all Arduino boards because of RAM consumption
     Page Buffer Examples: firstPage/nextPage. Less RAM usage, should work with all Arduino boards.
@@ -306,41 +315,40 @@ void loop() {
   This is a page buffer example.    
 */
 
-U8G2_SH1106_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
+  U8G2_SH1106_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/U8X8_PIN_NONE);
 
+  // End of constructor list
 
-
-// End of constructor list
-
-
-// setup the terminal (U8G2LOG) and connect to u8g2 for automatic refresh of the display
-// The size (width * height) depends on the selected font and the display
+  // setup the terminal (U8G2LOG) and connect to u8g2 for automatic refresh of the display
+  // The size (width * height) depends on the selected font and the display
 
 #define U8LOG_WIDTH 20
 #define U8LOG_HEIGHT 8
-uint8_t u8log_buffer[U8LOG_WIDTH*U8LOG_HEIGHT];
-U8G2LOG u8g2log;
+  uint8_t u8log_buffer[U8LOG_WIDTH * U8LOG_HEIGHT];
+  U8G2LOG u8g2log;
 
+  void setup(void)
+  {
 
-void setup(void) {
+    Serial1.begin(115200); // Start reading from Serial communication interface
 
-  Serial1.begin(115200);				// Start reading from Serial communication interface
-
-  u8g2.begin();  
-  u8g2.setFont(u8g2_font_5x7_tr);	// set the font for the terminal window
-  u8g2log.begin(u8g2, U8LOG_WIDTH, U8LOG_HEIGHT, u8log_buffer);
-  u8g2log.setLineHeightOffset(0);	// set extra space between lines in pixel, this can be negative
-  u8g2log.setRedrawMode(1);		// 0: Update screen with newline, 1: Update screen for every char  
-}
-
-void loop(void) {
-  char c;
-  while (Serial1.available() > 0) {
-    c = Serial1.read();			// read from Serial Monitor
-    u8g2log.print(c);               // print to display
-    Serial1.print(c);                // and print back to monitor
+    u8g2.begin();
+    u8g2.setFont(u8g2_font_5x7_tr); // set the font for the terminal window
+    u8g2log.begin(u8g2, U8LOG_WIDTH, U8LOG_HEIGHT, u8log_buffer);
+    u8g2log.setLineHeightOffset(0); // set extra space between lines in pixel, this can be negative
+    u8g2log.setRedrawMode(1);       // 0: Update screen with newline, 1: Update screen for every char
   }
-}
+
+  void loop(void)
+  {
+    char c;
+    while (Serial1.available() > 0)
+    {
+      c = Serial1.read(); // read from Serial Monitor
+      u8g2log.print(c);   // print to display
+      Serial1.print(c);   // and print back to monitor
+    }
+  }
 }
 #endif
 
@@ -348,14 +356,18 @@ void loop(void) {
 
 #include <Arduino_LSM9DS1.h>
 
-void setup() {
+void setup()
+{
   Serial.begin(9600);
-  while (!Serial);
+  while (!Serial)
+    ;
   Serial.println("Started");
 
-  if (!IMU.begin()) {
+  if (!IMU.begin())
+  {
     Serial.println("Failed to initialize IMU!");
-    while (1);
+    while (1)
+      ;
   }
 
   Serial.print("Accelerometer sample rate = ");
@@ -366,7 +378,8 @@ void setup() {
   Serial.println("X\tY\tZ");
 }
 
-void loop() {
+void loop()
+{
   float x, y, z, delta = 0.05;
 
   if (IMU.accelerationAvailable())
@@ -385,20 +398,24 @@ void loop() {
   }
 }
 
-#endif  // IMU_MOTION_ACCEL
+#endif // IMU_MOTION_ACCEL
 
 #if IMU_MOTION_GYRO == 1
 
 #include <Arduino_LSM9DS1.h>
 
-void setup() {
+void setup()
+{
   Serial.begin(9600);
-  while (!Serial);
+  while (!Serial)
+    ;
   Serial.println("Started");
 
-  if (!IMU.begin()) {
+  if (!IMU.begin())
+  {
     Serial.println("Failed to initialize IMU!");
-    while (1);
+    while (1)
+      ;
   }
   Serial.print("Gyroscope sample rate = ");
   Serial.print(IMU.gyroscopeSampleRate());
@@ -408,10 +425,12 @@ void setup() {
   Serial.println("X\tY\tZ");
 }
 
-void loop() {
+void loop()
+{
   float x, y, z;
 
-  if (IMU.gyroscopeAvailable()) {
+  if (IMU.gyroscopeAvailable())
+  {
     IMU.readGyroscope(x, y, z);
 
     Serial.print(x);

@@ -203,57 +203,73 @@ void setup()
   }
 }
 
+static int countReadings = 0;
+static float temperatureArray[5] = {0};
+static float humidityArray[5] = {0};
 void loop()
 {
   // read all the sensor values
-  float tempOffset = 6.00;
-  float temperature = HTS.readTemperature() - tempOffset;
-  float humidity = HTS.readHumidity();
-  u8g2.firstPage();
-
-  // print each of the sensor values
-  Serial.print("Temperature = ");
-  Serial.print(temperature);
-  Serial.println(" °C");
-  char result_int, result_float[8]; // Buffer big enough for 7-character float
-  //dtostrf(temperature, 6, 2, result); // Leave room for too large numbers!
-  result_int = (int)temperature;
-  float val_float = (abs(temperature) - abs(result_int)) * 100;
-  int val_fra = (int)val_float;
-  sprintf(result_float, "%d.%d", result_int, val_fra); //
-
-  do
+  const float tempOffset = -0.05, humOffset = 5.00;
+  temperatureArray[countReadings] = HTS.readTemperature() + tempOffset;
+  humidityArray[countReadings] = HTS.readHumidity() + humOffset;
+  Serial.print(countReadings);
+  if (countReadings >= 4)
   {
-    u8g2.setFont(u8g2_font_ncenB14_tr);
-    u8g2.drawStr(0, 24, "Temperature in");
-    u8g2.drawStr(0, 48, "deg C:");
-    u8g2.drawStr(65, 48, result_float);
-  } while (u8g2.nextPage());
-  delay(1500);
+    static float temperature = 0;
+    static float humidity = 0;
+    for (int i = 0; i < 5; i++)
+    {
+      temperature += temperatureArray[i];
+      humidity += humidityArray[i];
+    }
+    temperature /= 5.00;
+    humidity /= 5.00;
+    u8g2.firstPage();
+    countReadings = 0;
+    // print each of the sensor values
+    Serial.print("Temperature = ");
+    Serial.print(temperature);
+    Serial.println(" °C");
+    char result_int, result_float[8]; // Buffer big enough for 7-character float
+    result_int = static_cast<int>(temperature);
+    float val_float = (abs(temperature) - abs(result_int)) * 100;
+    int val_fra = static_cast<int>(val_float);
+    sprintf(result_float, "%d.%d", result_int, val_fra); //
 
-  Serial.print("Humidity    = ");
-  Serial.print(humidity);
-  Serial.println(" %");
-  // char result[8]; // Buffer big enough for 7-character float
-  //dtostrf(humidity, 6, 2, result); // Leave room for too large numbers!
-  result_int = (int)humidity;
-  val_float = (abs(humidity) - abs(result_int)) * 100;
-  val_fra = (int)val_float;
-  sprintf(result_float, "%d.%d", result_int, val_fra); //
+    do
+    {
+      u8g2.setFont(u8g2_font_ncenB14_tr);
+      u8g2.drawStr(0, 24, "Temperature in");
+      u8g2.drawStr(0, 48, "deg C:");
+      u8g2.drawStr(65, 48, result_float);
+    } while (u8g2.nextPage());
+    delay(2500);
 
-  u8g2.firstPage();
-  do
-  {
-    u8g2.setFont(u8g2_font_ncenB14_tr);
-    u8g2.drawStr(0, 24, "Humidity");
-    u8g2.drawStr(0, 48, "% = ");
-    u8g2.drawStr(55, 48, result_float);
-  } while (u8g2.nextPage());
-  // print an empty line
-  Serial.println();
+    Serial.print("Humidity    = ");
+    Serial.print(humidity);
+    Serial.println(" %");
+    // char result[8]; // Buffer big enough for 7-character float
+    //dtostrf(humidity, 6, 2, result); // Leave room for too large numbers!
+    result_int = static_cast<int>(humidity);
+    val_float = (abs(humidity) - abs(result_int)) * 100;
+    val_fra = static_cast<int>(val_float);
+    sprintf(result_float, "%d.%d", result_int, val_fra); //
 
-  // wait 1 second to print again
+    u8g2.firstPage();
+    do
+    {
+      u8g2.setFont(u8g2_font_ncenB14_tr);
+      u8g2.drawStr(0, 24, "Humidity");
+      u8g2.drawStr(0, 48, "% = ");
+      u8g2.drawStr(55, 48, result_float);
+    } while (u8g2.nextPage());
+    // print an empty line
+    Serial.println();
+
+    // wait 1 second to print again
+  }
   delay(1000);
+  countReadings++;
 }
 
 #endif

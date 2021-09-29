@@ -46,7 +46,9 @@ LED ON: This LED is connected to the 5V input from either USB or VIN.
 ## Project Milestones
 
 - [X] Provide Air gestures for Music Volume and Playback control
-- [ ] IMU for mode toggle or playing games
+- [ ] IMU for mode toggle:
+	- [X] Gyroscope selection of different modes (Left flick and right flick)
+	- [ ] Use Accel. for skip/back 5 seconds in music (move up/ down)
 - [ ] Interface SD card with MCU
 - [ ] Interface audio amplifier with DAC of MCU
 - [ ] Play music from SD Card

@@ -12,6 +12,16 @@
 #include <Wire.h>
 #endif
 
+#define DEBUG 1
+
+#if DEBUG == 1
+#define debuglog(x) Serial.print(x)
+#define debuglogln(x) Serial.println(x)
+#else
+#define debuglog(x)
+#define debuglogln(x)
+#endif
+
 /*
 gesture data from the on-board APDS9960 sensor
 */

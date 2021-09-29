@@ -1,7 +1,5 @@
 #include "sensorManager.h"
 
-#define verboseFlag 0
-
 // OLED Display configuration
 U8G2_SH1106_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/U8X8_PIN_NONE);
 
@@ -9,24 +7,22 @@ int sensorSetup::setupIMU()
 {
   if (!IMU.begin())
   {
-    Serial.println("Failed to initialize IMU!");
+    debuglogln("Failed to initialize IMU!");
     while (1)
       ;
   }
-#if verboseFlag == 1
-  Serial.print("Accelerometer sample rate = ");
-  Serial.print(IMU.accelerationSampleRate());
-  Serial.println(" Hz");
-  Serial.println();
-  Serial.println("Acceleration in g's");
-  Serial.println("X\tY\tZ");
-  Serial.print("Gyroscope sample rate = ");
-  Serial.print(IMU.gyroscopeSampleRate());
-  Serial.println(" Hz");
-  Serial.println();
-  Serial.println("Gyroscope in degrees/second");
-  Serial.println("X\tY\tZ");
-#endif
+  debuglog("Accelerometer sample rate = ");
+  debuglog(IMU.accelerationSampleRate());
+  debuglogln(" Hz");
+  debuglogln();
+  debuglogln("Acceleration in g's");
+  debuglogln("X\tY\tZ");
+  debuglog("Gyroscope sample rate = ");
+  debuglog(IMU.gyroscopeSampleRate());
+  debuglogln(" Hz");
+  debuglogln();
+  debuglogln("Gyroscope in degrees/second");
+  debuglogln("X\tY\tZ");
   return 0;
 }
 
@@ -35,27 +31,27 @@ int sensorSetup::setupAirGesture()
 
   if (!IMU.begin())
   {
-    Serial.println("Failed to initialize IMU!");
+    debuglogln("Failed to initialize IMU!");
     while (1)
       ;
   }
-#if verboseFlag == 1
-  Serial.print("Accelerometer sample rate = ");
-  Serial.print(IMU.accelerationSampleRate());
-  Serial.println(" Hz");
-  Serial.println();
-  Serial.println("Acceleration in g's");
-  Serial.println("X\tY\tZ");
 
-  Serial.println("Started gyro");
+  debuglog("Accelerometer sample rate = ");
+  debuglog(IMU.accelerationSampleRate());
+  debuglogln(" Hz");
+  debuglogln();
+  debuglogln("Acceleration in g's");
+  debuglogln("X\tY\tZ");
 
-  Serial.print("Gyroscope sample rate = ");
-  Serial.print(IMU.gyroscopeSampleRate());
-  Serial.println(" Hz");
-  Serial.println();
-  Serial.println("Gyroscope in degrees/second");
-  Serial.println("X\tY\tZ");
-#endif
+  debuglogln("Started gyro");
+
+  debuglog("Gyroscope sample rate = ");
+  debuglog(IMU.gyroscopeSampleRate());
+  debuglogln(" Hz");
+  debuglogln();
+  debuglogln("Gyroscope in degrees/second");
+  debuglogln("X\tY\tZ");
+
   return 0;
 }
 
@@ -63,7 +59,7 @@ int sensorSetup::setupHumidityTemperature()
 {
   if (!HTS.begin())
   {
-    Serial.println("Failed to initialize humidity temperature sensor!");
+    debuglogln("Failed to initialize humidity temperature sensor!");
     while (1)
       ;
   }
@@ -112,16 +108,16 @@ int sensorLoop::loopSel()
   switch (sensorLoop::gyroStateChangeFlag)
   {
   case 1:
-    Serial.println("\nMusic Player");
+    debuglogln("\nMusic Player");
     sensorLoop::loopHumidityTemperature();
     /* code */
     break;
   case 2:
-    Serial.println("\nHumidity n Temp");
+    debuglogln("\nHumidity n Temp");
     sensorLoop::loopHumidityTemperature();
     break;
   default:
-    Serial.println("\n\n\nTO-DO\n\n\n");
+    debuglogln("\n\n\nTO-DO\n\n\n");
     break;
   }
   return 0;
@@ -135,19 +131,19 @@ int sensorLoop::loopIMU_accel()
   {
     IMU.readAcceleration(x, y, z);
     if (y >= 1 - delta){
-      Serial.println("left");
+      debuglogln("left");
       sensorLoop::accelStateChangeFlag++;
-      Serial.println("\naccFlag");
-      Serial.print(sensorLoop::accelStateChangeFlag);
+      debuglogln("\naccFlag");
+      debuglog(sensorLoop::accelStateChangeFlag);
       resetFlag();
       delay(1500);
     }
     else if (y <= delta - 1)
     {
-      Serial.println("right");
+      debuglogln("right");
       sensorLoop::accelStateChangeFlag--;
-      Serial.println("\naccFlag");
-      Serial.print(sensorLoop::accelStateChangeFlag);
+      debuglogln("\naccFlag");
+      debuglog(sensorLoop::accelStateChangeFlag);
       resetFlag();
       delay(1500);
     }
@@ -166,18 +162,18 @@ int sensorLoop::loopIMU_gyro()
 
     if (y < -delta)
     {
-      Serial.println("Flicked down");
+      debuglogln("Flicked down");
       sensorLoop::gyroStateChangeFlag--;
       delay(1500);
     }
     else if (y > delta)
     {
-      Serial.println("Flicked up");
+      debuglogln("Flicked up");
       sensorLoop::gyroStateChangeFlag++;
       delay(1500);
     }
-    Serial.println("\ngyroFlag");
-    Serial.print(sensorLoop::gyroStateChangeFlag);
+    debuglogln("\ngyroFlag");
+    debuglog(sensorLoop::gyroStateChangeFlag);
     resetFlag();
   }
   delay(2);

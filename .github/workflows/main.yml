@@ -1,0 +1,42 @@
+name: PlatformIO CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        example: [firmware/SmartDuinoFW]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache pip
+      uses: actions/cache@v2
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: ${{ runner.os }}-pip-
+    - name: Cache PlatformIO
+      uses: actions/cache@v2
+      with:
+        path: ~/.platformio
+        key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+    - name: Set up Python
+      uses: actions/setup-python@v2
+    - name: Install PlatformIO
+      run: |
+        python -m pip install --upgrade pip
+        pip install --upgrade platformio
+    - name: Install library dependencies
+      run: pio lib -g install arduino-libraries/Arduino_HTS221@^1.0.0 olikraus/U8g2@^2.28.8	arduino-libraries/Arduino_APDS9960@^1.0.3 arduino-libraries/Arduino_LSM9DS1@^1.1.0
+
+    - name: Run PlatformIO FW
+      run: pio ci firmware/SmartDuinoFW --board=nano33ble
+      
+    - name: Run PlatformIO mbed-test
+      run: pio ci firmware/test-mbed --board=nano33ble
+  
+    - name: Run PlatformIO all-test
+      run: pio ci firmware/platformIO-BLEnano-Test --board=nano33ble

@@ -41,7 +41,7 @@ int sensorSetup::setupAirGesture()
 
   if (!APDS.begin())
   {
-    Serial.println("Error initializing APDS9960 sensor!");
+    debuglogln("Error initializing APDS9960 sensor!");
   }
 
   // for setGestureSensitivity(..) a value between 1 and 100 is required.
@@ -51,7 +51,7 @@ int sensorSetup::setupAirGesture()
   // Default is 80
   //APDS.setGestureSensitivity(80);
 
-  Serial.println("Detecting gestures ...");
+  debuglogln("Detecting gestures ...");
 
   do
   {
@@ -67,7 +67,7 @@ int sensorSetup::setupHumidityTemperature()
 {
   u8g2.begin();
   Serial.begin(9600);
-  Serial.println("DHT Serial Started");
+  debuglogln("DHT Serial Started");
   if (!HTS.begin())
   {
     debuglogln("Failed to initialize humidity temperature sensor!");
@@ -144,7 +144,10 @@ int sensorLoop::loopIMU_accel()
       debuglogln("\naccFlag");
       debuglog(sensorLoop::accelStateChangeFlag);
       resetFlag();
-      delay(1500);
+      digitalWrite(LED_BUILTIN, HIGH); // turn the LED on (HIGH is the voltage level)
+      delay(1100);
+      digitalWrite(LED_BUILTIN, LOW);  // turn the LED off by making the voltage LOW
+      delay(400);
     }
     else if (y <= delta - 1)
     {
@@ -153,7 +156,10 @@ int sensorLoop::loopIMU_accel()
       debuglogln("\naccFlag");
       debuglog(sensorLoop::accelStateChangeFlag);
       resetFlag();
-      delay(1500);
+      digitalWrite(LED_BUILTIN, HIGH); // turn the LED on (HIGH is the voltage level)
+      delay(1100);
+      digitalWrite(LED_BUILTIN, LOW);  // turn the LED off by making the voltage LOW
+      delay(400);
     }
   }
   return 0;
@@ -202,7 +208,7 @@ int sensorLoop::loopAirGesture()
     switch (gesture)
     {
     case GESTURE_UP:
-      Serial.println("Detected UP gesture");
+      debuglogln("Detected UP gesture");
       if (song_num < max_song)
         song_num++;
       else
@@ -219,7 +225,7 @@ int sensorLoop::loopAirGesture()
 
     case GESTURE_DOWN:
 
-      Serial.println("Detected DOWN gesture");
+      debuglogln("Detected DOWN gesture");
       if (song_num > 0)
         song_num--;
       else
@@ -235,7 +241,7 @@ int sensorLoop::loopAirGesture()
       break;
 
     case GESTURE_LEFT:
-      Serial.println("Detected LEFT gesture");
+      debuglogln("Detected LEFT gesture");
       if (volume < max_volume)
         volume++;
       itoa(volume, volume_char, 10);
@@ -249,7 +255,7 @@ int sensorLoop::loopAirGesture()
       break;
 
     case GESTURE_RIGHT:
-      Serial.println("Detected RIGHT gesture");
+      debuglogln("Detected RIGHT gesture");
       if (volume > 0)
         volume--;
       itoa(volume, volume_char, 10);
@@ -263,7 +269,7 @@ int sensorLoop::loopAirGesture()
       break;
 
     default:
-      Serial.println("Detected NO gesture");
+      debuglogln("Detected NO gesture");
       // ignore
       break;
     }
@@ -280,9 +286,9 @@ int sensorLoop::loopHumidityTemperature()
   u8g2.firstPage();
 
   // print each of the sensor values
-  Serial.print("Temperature = ");
-  Serial.print(temperature);
-  Serial.println(" °C");
+  debuglog("Temperature = ");
+  debuglog(temperature);
+  debuglogln(" °C");
   char result_int, result_float[8]; // Buffer big enough for 7-character float
   // dtostrf(temperature, 6, 2, result); // Leave room for too large numbers!
   result_int = (int)temperature;
@@ -299,9 +305,9 @@ int sensorLoop::loopHumidityTemperature()
   } while (u8g2.nextPage());
   delay(1500);
 
-  Serial.print("Humidity    = ");
-  Serial.print(humidity);
-  Serial.println(" %");
+  debuglog("Humidity    = ");
+  debuglog(humidity);
+  debuglogln(" %");
   // char result[8]; // Buffer big enough for 7-character float
   // dtostrf(humidity, 6, 2, result); // Leave room for too large numbers!
   result_int = (int)humidity;
@@ -318,7 +324,7 @@ int sensorLoop::loopHumidityTemperature()
     u8g2.drawStr(55, 48, result_float);
   } while (u8g2.nextPage());
   // print an empty line
-  Serial.println();
+  debuglogln();
 
   // wait 1 second to print again
   delay(1500);

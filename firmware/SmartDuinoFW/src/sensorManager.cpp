@@ -89,7 +89,7 @@ int sensorSetup::setupSerialEcho()
 
 unsigned int sensorLoop::accelStateChangeFlag = 1;
 unsigned int sensorLoop::gyroStateChangeFlag = 1;
-unsigned int sensorLoop::accelMaxOptions = 4;
+unsigned int sensorLoop::accelMaxOptions = 2;
 unsigned int sensorLoop::gyroMaxOptions = 2;
 
 void sensorLoop::resetFlag()
@@ -111,19 +111,21 @@ void sensorLoop::resetFlag()
 
 int sensorLoop::loopSel()
 {
-  switch (sensorLoop::gyroStateChangeFlag)
+  loopIMU_accel();
+  switch (accelStateChangeFlag)
   {
   case 1:
     debuglogln("\nMusic Player");
-    sensorLoop::loopHumidityTemperature();
+    loopAirGesture();
     /* code */
     break;
   case 2:
     debuglogln("\nHumidity n Temp");
-    sensorLoop::loopHumidityTemperature();
+    loopHumidityTemperature();
     break;
   default:
     debuglogln("\n\n\nTO-DO\n\n\n");
+    loopAirGesture();
     break;
   }
   return 0;
@@ -132,7 +134,7 @@ int sensorLoop::loopSel()
 int sensorLoop::loopIMU_accel()
 {
   float x, y, z, delta = 0.05;
-
+  debuglogln("\nIMU_Accel loop\n");
   if (IMU.accelerationAvailable())
   {
     IMU.readAcceleration(x, y, z);
@@ -154,7 +156,6 @@ int sensorLoop::loopIMU_accel()
       delay(1500);
     }
   }
-  delay(5);
   return 0;
 }
 
@@ -186,14 +187,12 @@ int sensorLoop::loopIMU_gyro()
   return 0;
 }
 
-int volume = 5, max_volume = 10;
-int song_num = 1;
-char song_char[100], volume_char[100];
-int max_song = 5;
-
 int sensorLoop::loopAirGesture()
 {
-  
+  static int volume = 5, max_volume = 10;
+  static int song_num = 1;
+  static char song_char[100], volume_char[100];
+  static int max_song = 5;
   u8g2.firstPage();
   if (APDS.gestureAvailable())
   {

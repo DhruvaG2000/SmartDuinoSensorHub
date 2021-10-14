@@ -5,6 +5,7 @@ sensorLoop runSensors;
 
 void setupAllSensors()
 {
+  setupSensors.setupIMU();
   setupSensors.setupHumidityTemperature();
   setupSensors.setupAirGesture();
 }
@@ -14,5 +15,5 @@ void setup() {
 }
 
 void loop() {
-  runSensors.loopAirGesture();
+  runSensors.loopSel();
 }

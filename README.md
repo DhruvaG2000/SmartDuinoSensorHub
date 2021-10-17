@@ -13,9 +13,7 @@ It flaunts amazing features like:
 
 ## Preview
 
-![](media/Preview-2.jpg)
-
-![](media/IMG-20210927-WA0009.jpeg)
+![](media/SmartDuinoRev17oct.jpeg)
 
 ### About: Arduino Nano 33 BLE Sense
 ![](https://www.etechnophiles.com/wp-content/uploads/2021/01/component.jpg?ezimgfmt=ng:webp/ngcb40)

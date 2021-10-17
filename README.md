@@ -15,9 +15,13 @@ It flaunts amazing features like:
 
 ![](media/SmartDuinoRev17oct.jpeg)
 
-**KiCAD Layout** <br>
+**KiCAD Preview** <br>
 ![](media/kicad-rev0A1.png)
 ![](media/kicad-rev0A2.png)
+
+**Schematic** <br>
+![](media/kicad-sch-rev0A0.png)
+
 ### About: Arduino Nano 33 BLE Sense
 ![](https://www.etechnophiles.com/wp-content/uploads/2021/01/component.jpg?ezimgfmt=ng:webp/ngcb40)
 

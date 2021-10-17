@@ -1,3 +1,6 @@
 [submodule "hardware/Nano_33"]
 	path = hardware/Nano_33
 	url = git@github.com:hulkco/Nano_33.git
+[submodule "hardware/KiCad-SSD1306-128x64"]
+	path = hardware/KiCad-SSD1306-128x64
+	url = https://github.com/pforrmi/KiCad-SSD1306-128x64.git

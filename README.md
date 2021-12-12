@@ -2,12 +2,11 @@
 
 ## Introduction
 
-This is an Open Source Project that aims to provide a Smart Speaker with an extremely intuitive user interface using gestures and OLED Display.
+This is an Open Source Project that aims to provide a Smart Sensor Hub with an extremely intuitive user interface using gestures and OLED Display.
 It flaunts amazing features like:
 - OLED Module for high contrast and low power consumption Display Interface.
 - Air Gestures to control music playback and volume (No more BUTTONS!)
 - Air Humidity and Temperature Sensing.
-- Timer with alarm.
 - Fun Games using motion detection.
 - BLE for low power wireless connectivity with your smartphone.
 
@@ -42,21 +41,21 @@ LED ON: This LED is connected to the 5V input from either USB or VIN.
 
 ## Hardware Requirements
 
-1. Arduino nano ble sense
-2. SD Card Module
-3. Speaker
-4. Audio Amplifier
+1. Arduino nano 33 ble sense
+2. SH1106_128X64 OLED Display Module (I2C)
+3. LED Bar
+4. MQ-135 or any other MQ-Series sensor
 
 
 ## Project Milestones
 
-- [X] Provide Air gestures for Music Volume and Playback control
+- [X] Provide Air gestures for control
 - [ ] IMU for mode toggle:
 	- [X] Gyroscope selection of different modes (Left flick and right flick)
-	- [ ] Use Accel. for skip/back 5 seconds in music (move up/ down)
-- [ ] Interface SD card with MCU
-- [ ] Interface audio amplifier with DAC of MCU
-- [ ] Play music from SD Card
+	- [ ] Use Accel. for more selections (move up/ down)
+- [X] Interface OLED Module with MCU
+- [X] Interface MQ-Series Air quality Sensor with MCU
+- [ ] Broadcast data over BLE
 
 ## PCB Design
 

@@ -77,6 +77,14 @@ int sensorSetup::setupHumidityTemperature()
   return 0;
 }
 
+int sensorSetup::setupAnalogMQ()
+{
+  u8g2.begin();
+  Serial.begin(9600);
+  debuglogln("Air Quality Sensor Setup Done!");
+  return 0;
+}
+
 int sensorSetup::setupSerialEcho()
 {
   u8g2.begin();
@@ -89,8 +97,9 @@ int sensorSetup::setupSerialEcho()
 
 unsigned int sensorLoop::accelStateChangeFlag = 1;
 unsigned int sensorLoop::gyroStateChangeFlag = 1;
-unsigned int sensorLoop::accelMaxOptions = 2;
+unsigned int sensorLoop::accelMaxOptions = 3;
 unsigned int sensorLoop::gyroMaxOptions = 2;
+unsigned int sensorLoop::LED_BAR_STATE = HIGH;
 
 void sensorLoop::resetFlag()
 {
@@ -122,6 +131,10 @@ int sensorLoop::loopSel()
   case 2:
     debuglogln("\nHumidity n Temp");
     loopHumidityTemperature();
+    break;
+  case 3:
+    debuglogln("\nAir Quality/MQ");
+    loopAnalogMQ();
     break;
   default:
     debuglogln("\n\n\nTO-DO\n\n\n");
@@ -328,6 +341,30 @@ int sensorLoop::loopHumidityTemperature()
 
   // wait 1 second to print again
   delay(1500);
+  return 0;
+}
+
+unsigned int sensorLoop::MQ_Pin = A0;
+unsigned int sensorLoop::LED_BAR = D2;
+
+int sensorLoop::loopAnalogMQ()
+{
+  int analogReading = analogRead(A0);
+  debuglogln("The MQ Analog Raw = ");
+  debuglog(analogReading);
+  char OLED_text[100];
+  itoa(analogReading, OLED_text, 10);
+  u8g2.firstPage();
+  do
+  {
+    u8g2.setFont(u8g2_font_ncenB14_tr);
+    u8g2.drawStr(0, 24, "MQ Sensor");
+    // u8g2.drawStr(0, 48, "% = ");
+    u8g2.drawStr(55, 48, OLED_text);
+  } while (u8g2.nextPage());
+  digitalWrite(LED_BAR, LED_BAR_STATE); // turn the LED on
+  LED_BAR_STATE = !LED_BAR_STATE;
+  delay(1100);
   return 0;
 }
 

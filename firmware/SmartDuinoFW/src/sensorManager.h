@@ -32,11 +32,12 @@ public:
     static int setupAirGesture();
     static int setupHumidityTemperature();
     static int setupSerialEcho();
+    static int setupAnalogMQ();
 };
 
 class sensorLoop
 {
-    static unsigned int accelStateChangeFlag, gyroStateChangeFlag, accelMaxOptions, gyroMaxOptions;
+    static unsigned int accelStateChangeFlag, gyroStateChangeFlag, accelMaxOptions, gyroMaxOptions, MQ_Pin, LED_BAR, LED_BAR_STATE;
     static void resetFlag();
 public:
     sensorLoop() {}
@@ -45,6 +46,7 @@ public:
     static int loopIMU_gyro();
     static int loopAirGesture();
     static int loopHumidityTemperature();
+    static int loopAnalogMQ();
     static int loopSerialEcho();
     ~sensorLoop() {}
 };

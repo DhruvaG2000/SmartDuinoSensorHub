@@ -10,6 +10,7 @@ void setupAllSensors()
   setupSensors.setupIMU();
   setupSensors.setupHumidityTemperature();
   setupSensors.setupAirGesture();
+  setupSensors.setupAnalogMQ();
 }
 
 void setup() {

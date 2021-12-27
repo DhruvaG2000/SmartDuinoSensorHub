@@ -57,7 +57,7 @@ Wire Wire Line
 Wire Wire Line
 	3750 1250 3750 1300
 $Comp
-L Linear-reg:LM78L05_TO92 U1
+L nano-ble-sense-speaker-rev0-rescue:LM78L05_TO92-Linear-reg U1
 U 1 1 616D28C0
 P 3750 950
 F 0 "U1" H 3750 1192 50  0000 C CNN
@@ -110,17 +110,14 @@ Wire Wire Line
 $Comp
 L power:+9V #PWR0103
 U 1 1 61703537
-P 3000 950
-F 0 "#PWR0103" H 3000 800 50  0001 C CNN
-F 1 "+9V" H 3015 1123 50  0000 C CNN
-F 2 "" H 3000 950 50  0001 C CNN
-F 3 "" H 3000 950 50  0001 C CNN
-	1    3000 950 
+P 2750 950
+F 0 "#PWR0103" H 2750 800 50  0001 C CNN
+F 1 "+9V" H 2765 1123 50  0000 C CNN
+F 2 "" H 2750 950 50  0001 C CNN
+F 3 "" H 2750 950 50  0001 C CNN
+	1    2750 950 
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	3000 950  3200 950 
-Connection ~ 3200 950 
 $Comp
 L Connector:Conn_01x02_Female J2
 U 1 1 6170C5E3
@@ -133,10 +130,7 @@ F 3 "~" H 3750 1750 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	3000 950  3000 1750
-Wire Wire Line
-	3000 1750 3550 1750
-Connection ~ 3000 950 
+	2750 950  2750 1750
 Wire Wire Line
 	3200 1300 3200 1850
 Wire Wire Line
@@ -236,4 +230,31 @@ Wire Wire Line
 Wire Wire Line
 	3950 2150 3950 2250
 Connection ~ 3950 2250
+$Comp
+L LED:HDSP-4830_2 BAR?
+U 1 1 61C9BEEE
+P 5800 1400
+F 0 "BAR?" H 5800 2067 50  0000 C CNN
+F 1 "HDSP-4830_2" H 5800 1976 50  0000 C CNN
+F 2 "Display:HDSP-4830" H 5800 600 50  0001 C CNN
+F 3 "https://docs.broadcom.com/docs/AV02-1798EN" H 3800 1600 50  0001 C CNN
+	1    5800 1400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:D_Schottky D?
+U 1 1 61CA4EDA
+P 3000 950
+F 0 "D?" H 3000 733 50  0000 C CNN
+F 1 "D_Schottky" H 3000 824 50  0000 C CNN
+F 2 "" H 3000 950 50  0001 C CNN
+F 3 "~" H 3000 950 50  0001 C CNN
+	1    3000 950 
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	2850 950  2750 950 
+Connection ~ 2750 950 
+Wire Wire Line
+	2750 1750 3550 1750
 $EndSCHEMATC

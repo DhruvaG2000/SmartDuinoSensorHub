@@ -1,0 +1,3 @@
+[submodule "hardware/nano-ble-sense-speaker-rev0/component_libraries/kicad-lib-arduino"]
+	path = hardware/nano-ble-sense-speaker-rev0/component_libraries/kicad-lib-arduino
+	url = https://github.com/g200kg/kicad-lib-arduino

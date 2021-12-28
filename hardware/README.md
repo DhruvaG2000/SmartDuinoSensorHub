@@ -10,3 +10,4 @@ The estimated dimensions for the PCB will be:
 The MQ Sensors Module dimensions are:
 - L = 32.2mm
 - B = 20mm approx.
+- H = 15.4mm

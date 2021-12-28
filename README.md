@@ -10,16 +10,13 @@ It flaunts amazing features like:
 - Fun Games using motion detection.
 - BLE for low power wireless connectivity with your smartphone.
 
-## Preview
-
-![](media/SmartDuinoRev17oct.jpeg)
+## Previews
 
 **KiCAD Preview** <br>
-![](media/kicad-rev0A1.png)
-![](media/kicad-rev0A2.png)
+![](media/kicad-rev0B0.png)
 
 **Schematic** <br>
-![](media/kicad-sch-rev0A0.png)
+![](media/kicad-sch-rev0B0.png)
 
 ### About: Arduino Nano 33 BLE Sense
 ![](https://www.etechnophiles.com/wp-content/uploads/2021/01/component.jpg?ezimgfmt=ng:webp/ngcb40)

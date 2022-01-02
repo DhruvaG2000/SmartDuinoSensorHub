@@ -439,4 +439,23 @@ Wire Notes Line width 20 style dash_dot rgb(194, 1, 0)
 	5200 3450 5200 450 
 Wire Notes Line width 20 style dash_dot rgb(194, 1, 0)
 	7650 3450 7650 450 
+$Comp
+L Connector:Conn_01x04_Male MQ_Conn1
+U 1 1 61CBB754
+P 7900 1300
+F 0 "MQ_Conn1" H 8008 1581 50  0000 C CNN
+F 1 "Conn_01x04_Male" H 8008 1490 50  0000 C CNN
+F 2 "MQ-sensor:MQ-3" H 7900 1300 50  0001 C CNN
+F 3 "~" H 7900 1300 50  0001 C CNN
+	1    7900 1300
+	1    0    0    -1  
+$EndComp
+Text Notes 1550 850  0    50   ~ 0
+Microcontroller
+Text Notes 4050 700  0    50   ~ 0
+UI Components
+Text Notes 6200 700  0    50   ~ 0
+Power Section
+Text Notes 7750 600  0    50   ~ 0
+MQ sensor
 $EndSCHEMATC

@@ -3,4 +3,5 @@
   (lib (name Nano_33)(type KiCad)(uri ${KIPRJMOD}/component_libraries/Nano_33/Nano_33.pretty)(options "")(descr ""))
   (lib (name TYPE-C-31-M-17)(type Legacy)(uri ${KIPRJMOD}/component_libraries/KOREAN-HROPARTS-ELEC-TYPE-C-31-M-17-usb-type-c-receptable-6-pin/TYPE-C-31-M-17.mod)(options "")(descr ""))
   (lib (name Arduino)(type KiCad)(uri ${KIPRJMOD}/component_libraries/kicad-lib-arduino/Arduino.pretty)(options "")(descr ""))
+  (lib (name MQ-sensor)(type KiCad)(uri ${KIPRJMOD}/component_libraries/MQ-sensor/MQ-sensor.pretty)(options "")(descr ""))
 )

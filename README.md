@@ -23,7 +23,7 @@ It flaunts amazing features like:
 
 The pin diagram is
 
-![](https://www.etechnophiles.com/wp-content/uploads/2021/01/Nano-BLE-Sense-pinout.jpg?ezimgfmt=ng:webp/ngcb40)
+![](https://aws1.discourse-cdn.com/arduino/original/4X/6/2/c/62c5416c522d963757fb4e3bf2204e760e595350.jpeg)
 
 Features:
 

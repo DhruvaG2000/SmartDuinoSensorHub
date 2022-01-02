@@ -35,7 +35,7 @@ int sensorSetup::setupIMU()
 int sensorSetup::setupAirGesture()
 {
   u8g2.begin();
-  Serial.begin(9600);
+  // Serial.begin(9600);
 
   // while (!Serial);
 
@@ -66,7 +66,7 @@ int sensorSetup::setupAirGesture()
 int sensorSetup::setupHumidityTemperature()
 {
   u8g2.begin();
-  Serial.begin(9600);
+  // Serial.begin(9600);
   debuglogln("DHT Serial Started");
   if (!HTS.begin())
   {
@@ -80,7 +80,7 @@ int sensorSetup::setupHumidityTemperature()
 int sensorSetup::setupAnalogMQ()
 {
   u8g2.begin();
-  Serial.begin(9600);
+  // Serial.begin(9600);
   debuglogln("Air Quality Sensor Setup Done!");
   return 0;
 }

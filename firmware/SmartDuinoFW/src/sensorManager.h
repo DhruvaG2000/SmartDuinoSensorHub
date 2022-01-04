@@ -1,6 +1,7 @@
 #include <Arduino_APDS9960.h>
 #include <Arduino_HTS221.h>
 #include <Arduino_LSM9DS1.h>
+#include <LPS35HW.h>
 
 #include <Arduino.h>
 #include <U8g2lib.h>
@@ -31,21 +32,23 @@ public:
     static int setupIMU();
     static int setupAirGesture();
     static int setupHumidityTemperature();
+    static int setupPressure();
     static int setupSerialEcho();
     static int setupAnalogMQ();
 };
 
 class sensorLoop
 {
-    static unsigned int accelStateChangeFlag, gyroStateChangeFlag, accelMaxOptions, gyroMaxOptions, MQ_Pin, LED_BAR, LED_BAR_STATE;
     static void resetFlag();
 public:
+    static unsigned int accelStateChangeFlag, gyroStateChangeFlag, accelMaxOptions, gyroMaxOptions, MQ_Pin, LED_BAR, LED_BAR_STATE;
     sensorLoop() {}
     static int loopSel();
     static int loopIMU_accel();
     static int loopIMU_gyro();
     static int loopAirGesture();
     static int loopHumidityTemperature();
+    static int loopPressure();
     static int loopAnalogMQ();
     static int loopSerialEcho();
     ~sensorLoop() {}

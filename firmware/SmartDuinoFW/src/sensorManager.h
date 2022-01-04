@@ -2,6 +2,7 @@
 #include <Arduino_HTS221.h>
 #include <Arduino_LSM9DS1.h>
 #include <LPS35HW.h>
+#include <MeteoFunctions.h>
 
 #include <Arduino.h>
 #include <U8g2lib.h>

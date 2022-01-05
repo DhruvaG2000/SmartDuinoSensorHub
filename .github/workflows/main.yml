@@ -30,7 +30,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install --upgrade platformio
     - name: Install library dependencies
-      run: pio lib -g install arduino-libraries/Arduino_HTS221@^1.0.0 olikraus/U8g2@^2.28.8	arduino-libraries/Arduino_APDS9960@^1.0.3 arduino-libraries/Arduino_LSM9DS1@^1.1.0
+      run: pio lib -g install arduino-libraries/Arduino_HTS221@^1.0.0 olikraus/U8g2@^2.28.8	arduino-libraries/Arduino_APDS9960@^1.0.3 arduino-libraries/Arduino_LSM9DS1@^1.1.0 pilotak/LPS35HW@^1.0.2 pilotak/MeteoFunctions@^1.1.0
 
     - name: Run PlatformIO Firmware
       run: pio ci firmware/SmartDuinoFW --board=nano33ble

@@ -58,7 +58,7 @@ LED ON: This LED is connected to the 5V input from either USB or VIN.
 
 ## Precautions
 
-1. Use a good quality USB type B micro Cable to power the Arduino NANO BLE. Otherwise you may face glitchy OLED text or arduino hangs.
+1. Use a good quality micro USB type B cable to power the Arduino NANO BLE. Otherwise you may face glitchy OLED text or arduino hangs.
 2. Double check the I2C, GPIO and other pins before soldering.
 
 ## References:

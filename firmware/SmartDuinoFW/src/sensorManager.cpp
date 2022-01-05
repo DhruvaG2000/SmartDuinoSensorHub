@@ -9,13 +9,19 @@ U8G2LOG u8g2log;
 
 U8G2_SH1106_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/U8X8_PIN_NONE);
 
+unsigned int sensorLoop::accelStateChangeFlag = 1;
+unsigned int sensorLoop::gyroStateChangeFlag = 1;
+unsigned int sensorLoop::accelMaxOptions = 3;
+unsigned int sensorLoop::gyroMaxOptions = 2;
+unsigned int sensorLoop::LED_BAR_STATE = HIGH;
+
 int sensorSetup::setupIMU()
 {
   if (!IMU.begin())
   {
     debuglogln("Failed to initialize IMU!");
-    while (1)
-      ;
+      while (1)
+        ;
   }
   debuglog("Accelerometer sample rate = ");
   debuglog(IMU.accelerationSampleRate());
@@ -77,6 +83,18 @@ int sensorSetup::setupHumidityTemperature()
   return 0;
 }
 
+
+const float above_sea = 1000;  // ft
+LPS35HW lps;
+int sensorSetup::setupPressure()
+{
+    debuglogln("Pressure Sensor Setup!\n");
+    if (!lps.begin(&Wire1)) {
+      Serial.println("Could not find a LPS barometer, check wiring!");
+    }
+  return 0;
+}
+
 int sensorSetup::setupAnalogMQ()
 {
   u8g2.begin();
@@ -94,12 +112,6 @@ int sensorSetup::setupSerialEcho()
   u8g2log.setRedrawMode(1);       // 0: Update screen with newline, 1: Update screen for every char
   return 0;
 }
-
-unsigned int sensorLoop::accelStateChangeFlag = 1;
-unsigned int sensorLoop::gyroStateChangeFlag = 1;
-unsigned int sensorLoop::accelMaxOptions = 3;
-unsigned int sensorLoop::gyroMaxOptions = 2;
-unsigned int sensorLoop::LED_BAR_STATE = HIGH;
 
 void sensorLoop::resetFlag()
 {
@@ -123,18 +135,23 @@ int sensorLoop::loopSel()
   loopIMU_accel();
   switch (accelStateChangeFlag)
   {
+    // depreciated: music bplaying via ble not supported
+  // case 1:
+  //   debuglogln("\nMusic Player");
+  //   loopAirGesture();
+  //   /* code */
+  //   break;
   case 1:
-    debuglogln("\nMusic Player");
-    loopAirGesture();
-    /* code */
-    break;
-  case 2:
     debuglogln("\nHumidity n Temp");
     loopHumidityTemperature();
     break;
-  case 3:
+  case 2:
     debuglogln("\nAir Quality/MQ");
     loopAnalogMQ();
+    break;
+  case 3:
+    debuglogln("\nPressure Sensor\n");
+    loopPressure();
     break;
   default:
     debuglogln("\n\n\nTO-DO\n\n\n");
@@ -206,6 +223,29 @@ int sensorLoop::loopIMU_gyro()
   return 0;
 }
 
+int sensorLoop::loopAirGesture()
+{
+  debuglogln("\nAir Gesture loop\n");
+  if (APDS.gestureAvailable())
+  {
+    int gesture = APDS.readProximity();
+    if (gesture < 50)
+    {
+      sensorLoop::accelStateChangeFlag++;
+      debuglogln("\naccFlag");
+      debuglog(sensorLoop::accelStateChangeFlag);
+      resetFlag();
+      digitalWrite(LED_BUILTIN, HIGH); // turn the LED on (HIGH is the voltage level)
+      delay(1100);
+      digitalWrite(LED_BUILTIN, LOW);  // turn the LED off by making the voltage LOW
+      delay(400);
+    }
+  }
+  return 0;
+}
+
+// Depreciated: Not possible to stream music over BLE
+/*
 int sensorLoop::loopAirGesture()
 {
   static int volume = 5, max_volume = 10;
@@ -290,13 +330,14 @@ int sensorLoop::loopAirGesture()
 
   return 0;
 }
+*/
 
 int sensorLoop::loopHumidityTemperature()
 {
   const float tempOffset = -4.50, humiOffset = 6.00;
   static float temperature = HTS.readTemperature() + tempOffset;
   static float humidity = HTS.readHumidity() + humiOffset;
-  u8g2.firstPage();
+  // u8g2.firstPage();
 
   // print each of the sensor values
   debuglog("Temperature = ");
@@ -309,14 +350,14 @@ int sensorLoop::loopHumidityTemperature()
   int val_fra = (int)val_float;
   sprintf(result_float, "%d.%d", result_int, val_fra); //
 
-  do
-  {
-    u8g2.setFont(u8g2_font_ncenB14_tr);
-    u8g2.drawStr(0, 24, "Temperature in");
-    u8g2.drawStr(0, 48, "deg C:");
-    u8g2.drawStr(65, 48, result_float);
-  } while (u8g2.nextPage());
-  delay(1500);
+  // do
+  // {
+  //   u8g2.setFont(u8g2_font_ncenB14_tr);
+  //   u8g2.drawStr(0, 24, "Temperature in");
+  //   u8g2.drawStr(0, 48, "deg C:");
+  //   u8g2.drawStr(65, 48, result_float);
+  // } while (u8g2.nextPage());
+  // delay(1500);
 
   debuglog("Humidity    = ");
   debuglog(humidity);
@@ -341,6 +382,44 @@ int sensorLoop::loopHumidityTemperature()
 
   // wait 1 second to print again
   delay(1500);
+  return 0;
+}
+
+int sensorLoop::loopPressure()
+{
+  debuglogln("Pressure and temp\n");
+  float pressure = lps.readPressure();
+  char result_int, result_float[8]; // Buffer big enough for 7-character float
+  // dtostrf(temperature, 6, 2, result); // Leave room for too large numbers!
+  result_int = (int)pressure;
+  float val_float = (abs(pressure) - abs(result_int)) * 100;
+  int val_fra = (int)val_float;
+  sprintf(result_float, "%d.%d", result_int, val_fra); //
+  u8g2.firstPage();
+  do
+  {
+    u8g2.setFont(u8g2_font_ncenB14_tr);
+    u8g2.drawStr(0, 24, "Pressure in");
+    u8g2.drawStr(0, 48, "Hg:");
+    u8g2.drawStr(65, 48, result_float);
+  } while (u8g2.nextPage());
+  delay(1500);
+
+  float temp = lps.readTemp();
+  result_int = (int)temp;
+  val_float = (abs(temp) - abs(result_int)) * 100;
+  val_fra = (int)val_float;
+  sprintf(result_float, "%d.%d", result_int, val_fra); //
+  u8g2.firstPage();
+  do
+  {
+    u8g2.setFont(u8g2_font_ncenB14_tr);
+    u8g2.drawStr(0, 24, "Temperature");
+    u8g2.drawStr(0, 48, "*C:");
+    u8g2.drawStr(65, 48, result_float);
+  } while (u8g2.nextPage());
+  delay(1500);
+
   return 0;
 }
 

@@ -5,11 +5,12 @@ sensorLoop runSensors;
 
 void setupAllSensors()
 {
+  Serial.begin(115200);
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, LOW);   // turn the LED off (LOW is the voltage level)
-  Serial.begin(9600);
   setupSensors.setupIMU();
   setupSensors.setupHumidityTemperature();
+  setupSensors.setupPressure();
   setupSensors.setupAirGesture();
   setupSensors.setupAnalogMQ();
 }
